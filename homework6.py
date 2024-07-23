@@ -10,8 +10,8 @@ print('Modified dictionary:', my_dict)
 
 # Множества
 my_set = {1, 1, 'Яблоко', 'Яблоко', 42.314, True, 42.314}
-print(my_set)
+print('Set:', my_set)
 my_set.add(13)
 my_set.add((14, 5))
 my_set.discard(42.314)
-print(my_set)
+print('Modified set:', my_set)
