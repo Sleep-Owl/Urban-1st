@@ -6,11 +6,11 @@ class Animal:
         self.name = name  # индивидуальное название каждого животного
 
 
-# class Plant:
-#     edible = False  # съедобность
-#
-#     def __init__(self, name):
-#         self.name = name  # индивидуальное название каждого растения
+class Plant:
+    edible = False  # съедобность
+
+    def __init__(self, name):
+        self.name = name  # индивидуальное название каждого растения
 
 
 class Mammal(Animal):
