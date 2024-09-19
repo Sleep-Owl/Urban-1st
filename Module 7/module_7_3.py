@@ -9,6 +9,8 @@ class WordsFinder:
             with open(file, 'r', encoding='utf-8') as f:
                 text = f.read()
                 text_lower = text.lower()
+                for i in [',', '.', '=', '!', '?', ';', ':', ' - ']:
+                    text_lower = text_lower.replace(i, '')
                 words = text_lower.split()
                 result[file] = words
         return result
