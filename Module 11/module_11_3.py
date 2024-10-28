@@ -2,16 +2,19 @@ from inspect import getmodule
 
 
 def introspection_info(obj):
-    info = {'type': type(obj),
-            'atribute': dir(obj),
-            'methods_has': hasattr(obj, '__name__'),
-            'methods_get': getattr(obj, '__name__', 'Not have name'),
-            'module': getmodule(obj)}
+    info = {
+        'type': type(obj),
+        'attributes': dir(obj),
+        'methods': [method for method in dir(obj) if callable(getattr(obj, method))],
+        'module': None,
+        'class': getattr(obj, '__class__', None),
+        'init': getattr(obj, '__init__', None),
+        'length': len(obj) if hasattr(obj, '__len__') else None,
+        'values': getattr(obj, 'values', None)
+    }
 
-    if isinstance(obj, (list, tuple)):
-        info['length'] = len(obj)
-    elif isinstance(obj, dict):
-        info['keys'] = list(obj.keys())
+    if hasattr(obj, '__module__'):
+        info['module'] = getattr(obj, '__module__')
 
     return info
 
