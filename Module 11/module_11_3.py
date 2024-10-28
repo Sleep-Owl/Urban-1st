@@ -4,7 +4,7 @@ from inspect import getmodule
 def introspection_info(obj):
     info = {
         'type': type(obj),
-        'attributes': dir(obj),
+        'attributes': [attr for attr in dir(obj) if not callable(getattr(obj, attr))],
         'methods': [method for method in dir(obj) if callable(getattr(obj, method))],
         'module': None,
         'class': getattr(obj, '__class__', None),
