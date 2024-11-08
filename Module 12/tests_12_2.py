@@ -3,6 +3,7 @@ import unittest
 
 
 class TournamentTest(unittest.TestCase):
+    is_frozen = True
     """
         Класс для тестирования турниров.
     """
@@ -11,7 +12,7 @@ class TournamentTest(unittest.TestCase):
     def setUpClass(cls):
         cls.all_results = {}
 
-    @unittest.skipIf(True, 'Тесты в этом кейсе заморожены')
+    @unittest.skipIf(is_frozen == True, 'Тесты в этом кейсе заморожены')
     def setUp(self):
         """
         Создание объектов бегунов.
@@ -28,6 +29,7 @@ class TournamentTest(unittest.TestCase):
                 r[key] = value.name
             print(r)
 
+    @unittest.skipIf(is_frozen == True, 'Тесты в этом кейсе заморожены')
     def test_tournament_usain_nick(self):
         """
         Сравнение Усейна и Ника
@@ -38,6 +40,7 @@ class TournamentTest(unittest.TestCase):
         self.assertTrue(last_runner == self.nick, "Последний бегун должен быть Ник")
         self.all_results[1] = finishers
 
+    @unittest.skipIf(is_frozen == True, 'Тесты в этом кейсе заморожены')
     def test_tournament_andrey_nick(self):
         """
         Сравнение Андрея и Ника
@@ -48,6 +51,7 @@ class TournamentTest(unittest.TestCase):
         self.assertTrue(last_runner == self.nick, "Последний бегун должен быть Ник")
         self.all_results[2] = finishers
 
+    @unittest.skipIf(is_frozen == True, 'Тесты в этом кейсе заморожены')
     def test_tournament_usain_andrey_nick(self):
         """
         Сравнение Усейна, Андрея и Ника
@@ -57,5 +61,3 @@ class TournamentTest(unittest.TestCase):
         last_runner = list(finishers.values())[-1]
         self.assertTrue(last_runner == self.nick, "Последний бегун должен быть Ник")
         self.all_results[3] = finishers
-
-    is_frozen = True

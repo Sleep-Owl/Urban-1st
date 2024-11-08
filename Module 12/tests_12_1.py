@@ -3,8 +3,9 @@ import unittest
 
 
 class RunnerTest(unittest.TestCase):
+    is_frozen = False
 
-    @unittest.skipIf(False, 'Тест пройден')
+    @unittest.skipIf(is_frozen == True, 'Тест пройден')
     def test_walk(self):
         """
         Проверка функции walk
@@ -15,6 +16,7 @@ class RunnerTest(unittest.TestCase):
         walk_distance = runner.distance
         self.assertEqual(walk_distance, 50, 'Ошибка !!!')
 
+    @unittest.skipIf(is_frozen == True, 'Тест пройден')
     def test_run(self):
         """
         Проверка функции Run
@@ -25,6 +27,7 @@ class RunnerTest(unittest.TestCase):
         run_distance = runner.distance
         self.assertEqual(run_distance, 100, 'Ошибка !!!')
 
+    @unittest.skipIf(is_frozen == True, 'Тест пройден')
     def test_challenge(self):
         """
         Проверка неравенства двух объектов класса Runner
@@ -38,5 +41,3 @@ class RunnerTest(unittest.TestCase):
             runner_2.walk()
         walk_distance = runner_2.distance
         self.assertNotEqual(run_distance, walk_distance, 'Ошибка !!!')
-
-    is_frozen = False
