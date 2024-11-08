@@ -4,6 +4,7 @@ import unittest
 
 class RunnerTest(unittest.TestCase):
 
+    @unittest.skipIf(False, 'Тест пройден')
     def test_walk(self):
         """
         Проверка функции walk
@@ -37,3 +38,5 @@ class RunnerTest(unittest.TestCase):
             runner_2.walk()
         walk_distance = runner_2.distance
         self.assertNotEqual(run_distance, walk_distance, 'Ошибка !!!')
+
+    is_frozen = False
