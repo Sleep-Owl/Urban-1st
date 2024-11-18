@@ -11,6 +11,7 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 
 
 class UserState(StatesGroup):
+    gender = State()
     age = State()
     growth = State()
     weight = State()
@@ -22,7 +23,14 @@ async def start(message):
 
 
 @dp.message_handler(text=['Calories'])
-async def set_age(message):
+async def set_gender(message):
+    await message.answer(f'Введи 1, если ты мужчина или 2, если ты щенщина')
+    await UserState.gender.set()
+
+
+@dp.message_handler(state=UserState.gender)
+async def set_age(message, state):
+    await state.update_data(gender=int(message.text))
     await message.answer(f'Введите свой возраст:')
     await UserState.age.set()
 
@@ -45,7 +53,11 @@ async def set_weight(message, state):
 async def send_calories(message, state):
     await state.update_data(weight=int(message.text))
     data = await state.get_data()
-    calories = 10 * data['weight'] + 6.25 * data['growth'] + 5 * data['age'] + 5
+    print(data)
+    if data['gender'] == 1:
+        calories = 10 * data['weight'] + 6.25 * data['growth'] + 5 * data['age'] + 5
+    else:
+        calories = 10 * data['weight'] + 6.25 * data['growth'] + 5 * data['age'] - 161
     await message.answer(f'Ваша норма калорий: {calories}ккал')
     await state.finish()
 
