@@ -53,7 +53,6 @@ async def set_weight(message, state):
 async def send_calories(message, state):
     await state.update_data(weight=int(message.text))
     data = await state.get_data()
-    print(data)
     if data['gender'] == 1:
         calories = 10 * data['weight'] + 6.25 * data['growth'] + 5 * data['age'] + 5
     else:
