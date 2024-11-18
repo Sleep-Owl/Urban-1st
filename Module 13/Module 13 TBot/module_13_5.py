@@ -46,7 +46,7 @@ async def info(message):
 
 @dp.message_handler(text=['Расчитать'])
 async def set_gender(message):
-    await message.answer(f'Выбери свой пол:', reply_markup=kb2)
+    await message.answer(f'Выберите свой пол:', reply_markup=kb2)
     await UserState.gender.set()
 
 
@@ -59,29 +59,38 @@ async def set_age(message, state):
 
 @dp.message_handler(state=UserState.age)
 async def set_growth(message, state):
-    await state.update_data(age=int(message.text))
-    await message.answer(f'Введите свой рост:')
-    await UserState.growth.set()
+    if message.text.isdigit():
+        await state.update_data(age=int(message.text))
+        await message.answer(f'Введите свой рост:')
+        await UserState.growth.set()
+    else:
+        await message.answer(f'Пожалуйста, введите корректный возраст (число).')
 
 
 @dp.message_handler(state=UserState.growth)
 async def set_weight(message, state):
-    await state.update_data(growth=int(message.text))
-    await message.answer(f'Введите свой вес:')
-    await UserState.weight.set()
+    if message.text.isdigit():
+        await state.update_data(growth=int(message.text))
+        await message.answer(f'Введите свой вес:')
+        await UserState.weight.set()
+    else:
+        await message.answer(f'Пожалуйста, введите корректный рост (число).')
 
 
 @dp.message_handler(state=UserState.weight)
 async def send_calories(message, state):
-    await state.update_data(weight=int(message.text))
-    data = await state.get_data()
-    print(data)
-    if data['gender'] == 'Мужчина':
-        calories = 10 * data['weight'] + 6.25 * data['growth'] + 5 * data['age'] + 5
+    if message.text.isdigit():
+        await state.update_data(weight=int(message.text))
+        data = await state.get_data()
+        print(data)
+        if data['gender'] == 'Мужчина':
+            calories = 10 * data['weight'] + 6.25 * data['growth'] + 5 * data['age'] + 5
+        else:
+            calories = 10 * data['weight'] + 6.25 * data['growth'] + 5 * data['age'] - 161
+        await message.answer(f'Ваша норма калорий: {calories}ккал')
+        await state.finish()
     else:
-        calories = 10 * data['weight'] + 6.25 * data['growth'] + 5 * data['age'] - 161
-    await message.answer(f'Ваша норма калорий: {calories}ккал')
-    await state.finish()
+        await message.answer(f'Пожалуйста, введите корректный вес (число).')
 
 
 @dp.message_handler()
