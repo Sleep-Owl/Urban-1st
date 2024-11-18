@@ -52,9 +52,12 @@ async def set_gender(message):
 
 @dp.message_handler(state=UserState.gender)
 async def set_age(message, state):
-    await state.update_data(gender=message.text)
-    await message.answer(f'Введите свой возраст:', reply_markup=ReplyKeyboardRemove())
-    await UserState.age.set()
+    if message.text == 'Мужчина' or message.text == 'Женщина':
+        await state.update_data(gender=message.text)
+        await message.answer(f'Введите свой возраст:', reply_markup=ReplyKeyboardRemove())
+        await UserState.age.set()
+    else:
+        await message.answer(f'Пожалуйста, введите корректный пол')
 
 
 @dp.message_handler(state=UserState.age)
