@@ -3,7 +3,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 import asyncio
 import Key_for_bot
 
-api = Key_for_bot.api # используется импортируемый модуль с ключем телеграмм бота
+api = Key_for_bot.api  # используется импортируемый модуль с ключем телеграмм бота
 bot = Bot(token=api)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
